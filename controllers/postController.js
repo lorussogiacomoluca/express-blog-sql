@@ -12,13 +12,21 @@ const index = (req, res) => {
 
 const show = (req, res) => {
   const id = req.params.id;
-  const sql = `SELECT * FROM posts WHERE id = ?`;
+  const sqlPost = `SELECT * FROM posts WHERE id = ?`;
 
-  connection.query(sql, [id], (error, results) => {
+  connection.query(sqlPost, [id], (error, resultsPost) => {
     if (error) {
       return res.status(500).json({ message: error.message });
     }
-    res.send(results);
+    const post = resultsPost[0];
+    const sqlTags = `SELECT T.* FROM tags T join post_tag PT on T.id = PT.tag_id WHERE PT.post_id = ?`;
+    connection.query(sqlTags, [id], (error, resultsTags) => {
+      if (error) {
+        res.status(500).json({ message: error.message });
+      }
+      post.tags = resultsTags;
+      res.json(post);
+    });
   });
 };
 
