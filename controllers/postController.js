@@ -18,6 +18,11 @@ const show = (req, res) => {
     if (error) {
       return res.status(500).json({ message: error.message });
     }
+
+    if (resultsPost.length === 0) {
+      return res.status(404).json({ message: "Post non trovato" });
+    }
+
     const post = resultsPost[0];
     const sqlTags = `SELECT T.* FROM tags T join post_tag PT on T.id = PT.tag_id WHERE PT.post_id = ?`;
     connection.query(sqlTags, [id], (error, resultsTags) => {
