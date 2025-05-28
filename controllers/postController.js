@@ -10,4 +10,8 @@ const index = (req, res) => {
   });
 };
 
-module.exports = { index };
+const destroy = (req, res) => {
+  console.log("Deleted post");
+};
+
+module.exports = { index, destroy };
