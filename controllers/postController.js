@@ -11,7 +11,15 @@ const index = (req, res) => {
 };
 
 const show = (req, res) => {
-  console.log(`SHOW`);
+  const id = req.params.id;
+  const sql = `SELECT * FROM posts WHERE id = ?`;
+
+  connection.query(sql, [id], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: error.message });
+    }
+    res.send(results);
+  });
 };
 
 const destroy = (req, res) => {
