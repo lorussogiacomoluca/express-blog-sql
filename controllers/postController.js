@@ -11,7 +11,14 @@ const index = (req, res) => {
 };
 
 const destroy = (req, res) => {
-  console.log("Deleted post");
+  const id = req.params.id;
+  const sql = `DELETE FROM posts WHERE id = ?`;
+  connection.query(sql, [id], (error, results) => {
+    if (error) {
+      return res.status(500).json({ message: error.message });
+    }
+    res.sendStatus(204);
+  });
 };
 
 module.exports = { index, destroy };
