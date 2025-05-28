@@ -10,6 +10,10 @@ const index = (req, res) => {
   });
 };
 
+const show = (req, res) => {
+  console.log(`SHOW`);
+};
+
 const destroy = (req, res) => {
   const id = req.params.id;
   const sql = `DELETE FROM posts WHERE id = ?`;
@@ -21,4 +25,4 @@ const destroy = (req, res) => {
   });
 };
 
-module.exports = { index, destroy };
+module.exports = { index, show, destroy };
